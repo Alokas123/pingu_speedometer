@@ -28,10 +28,10 @@ end
 lib.onCache('vehicle', function(vehicle)
     if vehicle then
         CreateThread(function()
-            while carhud and cache.vehicle do
+            while cache.vehicle do
                 Wait(100)
                 if GetIsVehicleEngineRunning(cache.vehicle) then
-                    if p.speedo == 'kmh' then
+                    if p.speedo == 'kmh' and carhud then
                         local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 3.6)
                         local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
                         if p.usefuel then
@@ -45,7 +45,7 @@ lib.onCache('vehicle', function(vehicle)
                                 icon = 'tachometer',
                             })   
                         end
-                    elseif p.speedo == 'mph' then
+                    elseif p.speedo == 'mph' and carhud then
                         local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 2.23694)
                         local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
                         if p.usefuel then
@@ -59,6 +59,8 @@ lib.onCache('vehicle', function(vehicle)
                                 icon = 'tachometer',
                             })
                         end
+                    else
+                        lib.hideTextUI()
                     end
                 end
             end
