@@ -12,6 +12,7 @@ lua54 'yes'
 
 shared_scripts {
     '@ox_lib/init.lua',
+    'config.lua'
 }
 
 dependency 'ox_lib'

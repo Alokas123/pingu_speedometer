@@ -12,12 +12,22 @@ lib.onCache('vehicle', function(vehicle)
             while cache.vehicle do
                 Wait(100)
                 if GetIsVehicleEngineRunning(cache.vehicle) then
-                    local kmh = pyorisus(GetEntitySpeed(cache.vehicle) * 3.6)
+                    if Config.Speedo == 'kmh' then
+                    local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 3.6)
                     local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
-                    lib.showTextUI(('%s km/h     \n     bensaa: %s'):format(kmh, fuel), {
+                    lib.showTextUI(('%s km/h     \n     bensaa: %s'):format(speed, fuel), {
                         position = "right-center",
                         icon = 'tachometer',
                     })
+                    elseif Config.Speedo == 'mph' then
+                        local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 2.23694)
+                        local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
+                        lib.showTextUI(('%s MPH     \n     Fuel: %s'):format(speed, fuel), {
+                            position = "right-center",
+                            icon = 'tachometer',
+                        })
+                    else return
+                    end
                 end
             end
             lib.hideTextUI()
