@@ -1,2 +1,2 @@
 Config = {}
-Config.Speedo = 'mph' -- Accepts 'kmh' or 'mph'
+Config.Speedo = 'kmh' -- Accepts 'kmh' or 'mph'
