@@ -1,6 +1,6 @@
 carhud = true
 
-RegisterCommand("carhud", function(source, args, rawCommand)
+RegisterCommand(p.command, function(source, args, rawCommand)
     if carhud then
         carhud = false
         lib.notify({
