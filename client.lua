@@ -32,20 +32,33 @@ lib.onCache('vehicle', function(vehicle)
                 Wait(100)
                 if GetIsVehicleEngineRunning(cache.vehicle) then
                     if p.speedo == 'kmh' then
-                    local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 3.6)
-                    local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
-                    lib.showTextUI(('%s km/h     \n     %s: %s'):format(speed, p.fuel, fuel), {
-                        position = "right-center",
-                        icon = 'tachometer',
-                    })
+                        local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 3.6)
+                        local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
+                        if p.usefuel then
+                            lib.showTextUI(('%s km/h     \n     %s: %s'):format(speed, p.fuel, fuel), {
+                                position = "right-center",
+                                icon = 'tachometer',
+                            })
+                        else
+                            lib.showTextUI(('%s km/h'):format(speed), {
+                                position = "right-center",
+                                icon = 'tachometer',
+                            })   
+                        end
                     elseif p.speedo == 'mph' then
                         local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 2.23694)
                         local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
-                        lib.showTextUI(('%s MPH     \n     %s: %s'):format(speed, p.fuel, fuel), {
-                            position = "right-center",
-                            icon = 'tachometer',
-                        })
-                    else return
+                        if p.usefuel then
+                            lib.showTextUI(('%s MPH     \n     %s: %s'):format(speed, p.fuel, fuel), {
+                                position = "right-center",
+                                icon = 'tachometer',
+                            })
+                        else 
+                            lib.showTextUI(('%s MPH'):format(speed), {
+                                position = "right-center",
+                                icon = 'tachometer',
+                            })
+                        end
                     end
                 end
             end
@@ -53,3 +66,4 @@ lib.onCache('vehicle', function(vehicle)
         end)
     end
 end)
+
