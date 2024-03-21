@@ -37,12 +37,12 @@ lib.onCache('vehicle', function(vehicle)
                         local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
                         if p.usefuel then
                             lib.showTextUI(('%s km/h     \n     %s: %s'):format(speed, p.locale.fuel, fuel), {
-                                position = "right-center",
+                                position = p.position,
                                 icon = 'tachometer',
                             })
                         else
                             lib.showTextUI(('%s km/h'):format(speed), {
-                                position = "right-center",
+                                position = p.position,
                                 icon = 'tachometer',
                             })   
                         end
@@ -51,12 +51,12 @@ lib.onCache('vehicle', function(vehicle)
                         local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
                         if p.usefuel then
                             lib.showTextUI(('%s MPH     \n     %s: %s'):format(speed, p.locale.fuel, fuel), {
-                                position = "right-center",
+                                position = p.position,
                                 icon = 'tachometer',
                             })
                         else 
                             lib.showTextUI(('%s MPH'):format(speed), {
-                                position = "right-center",
+                                position = p.position,
                                 icon = 'tachometer',
                             })
                         end
