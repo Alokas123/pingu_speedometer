@@ -1,4 +1,4 @@
-carhud = true
+local carhud = true
 
 RegisterCommand(p.command, function(source, args, rawCommand)
     if carhud then
