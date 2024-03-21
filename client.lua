@@ -1,18 +1,19 @@
 local carhud = true
 
+Notify = function(title, type)
+    lib.notify({
+            title = title,
+            type = type
+    })
+end
+
 RegisterCommand(p.command, function(source, args, rawCommand)
     if carhud then
         carhud = false
-        lib.notify({
-            title = p.locale.turnedoff,
-            type = 'success'
-        })
+        Notify(p.locale.turnedoff, 'success')
     else
         carhud = true
-        lib.notify({
-            title = p.locale.turnedon,
-            type = 'success'
-        })
+        Notify(p.locale.turnedon, 'success')
     end
 end)
 
