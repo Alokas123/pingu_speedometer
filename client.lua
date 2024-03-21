@@ -4,13 +4,13 @@ RegisterCommand(p.command, function(source, args, rawCommand)
     if carhud then
         carhud = false
         lib.notify({
-            title = p.turnedoff,
+            title = p.locale.turnedoff,
             type = 'success'
         })
     else
         carhud = true
         lib.notify({
-            title = p.turnedon,
+            title = p.locale.turnedon,
             type = 'success'
         })
     end
@@ -35,7 +35,7 @@ lib.onCache('vehicle', function(vehicle)
                         local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 3.6)
                         local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
                         if p.usefuel then
-                            lib.showTextUI(('%s km/h     \n     %s: %s'):format(speed, p.fuel, fuel), {
+                            lib.showTextUI(('%s km/h     \n     %s: %s'):format(speed, p.locale.fuel, fuel), {
                                 position = "right-center",
                                 icon = 'tachometer',
                             })
@@ -49,7 +49,7 @@ lib.onCache('vehicle', function(vehicle)
                         local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 2.23694)
                         local fuel = round(GetVehicleFuelLevel(cache.vehicle), 1)
                         if p.usefuel then
-                            lib.showTextUI(('%s MPH     \n     %s: %s'):format(speed, p.fuel, fuel), {
+                            lib.showTextUI(('%s MPH     \n     %s: %s'):format(speed, p.locale.fuel, fuel), {
                                 position = "right-center",
                                 icon = 'tachometer',
                             })
