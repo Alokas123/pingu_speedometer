@@ -1,17 +1,5 @@
-local hideTextUI = function()
-    lib.hideTextUI()
-end
-
----@param text string
-local showTextUI = function(text)
-    lib.showTextUI(text, {
-        position = p.position,
-        icon = 'tachometer'
-    })
-end
-
 ---@param title string
-local notify = function(title)
+local function notify(title)
     lib.notify({
         title = title,
         type = 'success'
@@ -20,52 +8,46 @@ end
 
 local carhud = true
 RegisterCommand(p.command, function()
-    if carhud then
-        carhud = false
-        notify(p.locale.turnedoff)
-    else
-        carhud = true
-        notify(p.locale.turnedon)
-    end
+    carhud = not carhud
+    notify(carhud and p.locale.turnedon or p.locale.turnedoff)
 end, false)
 
+---@param n number
 local function round(n)
     return math.floor(n * 10 + 0.5) / 10
 end
 
+---@param n number
 local function pyorisus(n)
     return n % 1 >= 0.5 and math.ceil(n) or math.floor(n)
 end
+
+local useKilo <const> = p.speedo == 'kmh';
+local speedUnit <const> = useKilo and 'km/h' or 'MPH'
 
 lib.onCache('vehicle', function(vehicle)
     if vehicle then
         CreateThread(function()
             while cache.vehicle do
-                Wait(100)
                 if GetIsVehicleEngineRunning(cache.vehicle) then
-                    if p.speedo == 'kmh' and carhud then
-                        local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 3.6)
-                        local fuel = round(GetVehicleFuelLevel(cache.vehicle))
+                    if carhud then
+                        local speed <const> = pyorisus(GetEntitySpeed(cache.vehicle) * (useKilo and 3.6 or 2.23694))
+                        local text = ('%s %s'):format(speed, speedUnit);
                         if p.usefuel then
-                            showTextUI(('%s km/h     \n     %s: %s'):format(speed, p.locale.fuel, fuel))
-                        else
-                            showTextUI(('%s km/h'):format(speed))
+                            text = ('%s %s  \n %s: %s'):format(speed, speedUnit, p.locale.fuel, round(GetVehicleFuelLevel(cache.vehicle)))
                         end
-                    elseif p.speedo == 'mph' and carhud then
-                        local speed = pyorisus(GetEntitySpeed(cache.vehicle) * 2.23694)
-                        local fuel = round(GetVehicleFuelLevel(cache.vehicle))
-                        if p.usefuel then
-                            showTextUI(('%s MPH     \n     %s: %s'):format(speed, p.locale.fuel, fuel))
-                        else
-                            showTextUI(('%s MPH'):format(speed))
-                        end
+
+                        lib.showTextUI(text, {
+                            position = p.position,
+                            icon = 'tachometer'
+                        })
                     else
-                        hideTextUI()
+                        lib.hideTextUI()
                     end
                 end
+                Wait(100)
             end
-            hideTextUI()
+            lib.hideTextUI()
         end)
     end
 end)
-
