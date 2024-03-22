@@ -22,9 +22,8 @@ local function pyorisus(n)
     return n % 1 >= 0.5 and math.ceil(n) or math.floor(n)
 end
 
-local useKilo <const> = p.speedo == 'kmh';
+local useKilo <const> = p.speedo == 'kmh'
 local speedUnit <const> = useKilo and 'km/h' or 'MPH'
-
 lib.onCache('vehicle', function(vehicle)
     if vehicle then
         CreateThread(function()
@@ -32,7 +31,7 @@ lib.onCache('vehicle', function(vehicle)
                 if GetIsVehicleEngineRunning(cache.vehicle) then
                     if carhud then
                         local speed <const> = pyorisus(GetEntitySpeed(cache.vehicle) * (useKilo and 3.6 or 2.23694))
-                        local text = ('%s %s'):format(speed, speedUnit);
+                        local text = ('%s %s'):format(speed, speedUnit)
                         if p.usefuel then
                             text = ('%s %s  \n %s: %s'):format(speed, speedUnit, p.locale.fuel, round(GetVehicleFuelLevel(cache.vehicle)))
                         end
